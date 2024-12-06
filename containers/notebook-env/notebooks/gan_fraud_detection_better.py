@@ -229,8 +229,8 @@ cgan.train(X_train, y_train, pos_index, neg_index, epochs=2000, sample_interval=
 cgan.generator.save("generator.keras")
 cgan.discriminator.save("discriminator.keras")
 
-noise = np.random.normal(0, 1, (227454, 32))
-sampled_labels = np.zeros(227454).reshape(-1, 1)
+noise = np.random.normal(0, 1, (220154, 32))
+sampled_labels = np.zeros(220154).reshape(-1, 1)
 
 
 gen_samples = cgan.generator.predict([noise, sampled_labels])
@@ -238,8 +238,8 @@ gen_samples = cgan.generator.predict([noise, sampled_labels])
 gen_df = pd.DataFrame(data = gen_samples,
                       columns = df.drop(columns="Class").columns)
 
-noise_2 = np.random.normal(0, 1, (391, 32))
-sampled_labels_2 = np.ones(391).reshape(-1, 1)
+noise_2 = np.random.normal(0, 1, (376, 32))
+sampled_labels_2 = np.ones(376).reshape(-1, 1)
 
 
 gen_samples_2 = cgan.generator.predict([noise_2, sampled_labels_2])
@@ -267,17 +267,21 @@ ConfusionMatrixDisplay.from_estimator(lgb_1, X_test, y_test)
 plt.show()
 plt.savefig('fig2.png')
 
-noise_3 = np.random.normal(0, 1, (283823, 32))
-sampled_labels_3 = np.ones(283823).reshape(-1, 1)
+noise_3 = np.random.normal(0, 1, (219778, 32))
+sampled_labels_3 = np.ones(219778).reshape(-1, 1)
 
 
 gen_samples_3 = cgan.generator.predict([noise_3, sampled_labels_3])
 
 gen_df_3 = pd.DataFrame(data = gen_samples_3,
                       columns = df.drop(columns="Class").columns)
+                      
+                     
 
 gen_df_3['Class'] = 1
-df_sum = pd.concat([gen_df_3, df], ignore_index=True, sort=False)
+df_og_train = X_train
+df_og_train["Class"] = y_train
+df_sum = pd.concat([gen_df_3, df_og_train], ignore_index=True, sort=False)
 df_sum = df_sum.sample(frac=1).reset_index(drop=True)
 
 X_2 = df_sum.drop(columns="Class")
