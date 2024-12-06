@@ -190,6 +190,7 @@ class cGAN():
                 plt.ylabel("Loss")
                 plt.legend()
                 plt.show()
+                plt.savefig('losses.png')
 
 n = 100
 df = pd.read_csv('creditcard.csv', encoding='utf-8', sep=',')
@@ -214,12 +215,15 @@ y_pred = lgb_1.predict(X_test)
 print(classification_report(y_test, y_pred))
 ConfusionMatrixDisplay.from_estimator(lgb_1, X_test, y_test)
 plt.show()
+plt.savefig('fig1.png')
 
 cgan = cGAN()
 
 y_train = y_train.reshape(-1,1)
 pos_index = np.where(y_train==1)[0]
 neg_index = np.where(y_train==0)[0]
+cgan.train(X_train, y_train, pos_index, neg_index, epochs=2000, sample_interval=50)
+
 cgan.train(X_train, y_train, pos_index, neg_index, epochs=2000, sample_interval=50)
 
 
@@ -262,6 +266,7 @@ y_pred = lgb_1.predict(X_test)
 print(classification_report(y_test, y_pred))
 ConfusionMatrixDisplay.from_estimator(lgb_1, X_test, y_test)
 plt.show()
+plt.savefig('fig2.png')
 
 noise_3 = np.random.normal(0, 1, (283823, 32))
 sampled_labels_3 = np.ones(283823).reshape(-1, 1)
@@ -289,3 +294,4 @@ y_pred = lgb_2.predict(X_test)
 print(classification_report(y_test, y_pred))
 ConfusionMatrixDisplay.from_estimator(lgb_2, X_test, y_test)
 plt.show()
+plt.savefig('fig3.png')
