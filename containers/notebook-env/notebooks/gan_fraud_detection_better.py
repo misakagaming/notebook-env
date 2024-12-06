@@ -280,7 +280,7 @@ gen_df_3 = pd.DataFrame(data = gen_samples_3,
 
 gen_df_3['Class'] = 1
 df_og_train = X_train
-df_og_train["Class"] = y_train
+df_og_train["Class"] = y_train["Class"].tolist()
 df_sum = pd.concat([gen_df_3, df_og_train], ignore_index=True, sort=False)
 df_sum = df_sum.sample(frac=1).reset_index(drop=True)
 
