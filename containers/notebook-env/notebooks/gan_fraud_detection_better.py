@@ -44,12 +44,12 @@ class cGAN():
 
         # build discriminator
         self.discriminator = self.build_discriminator()
-        """self.discriminator.compile(loss=['binary_crossentropy'],
-                                   optimizer=Adam(0.0002, 0.5),
-                                   metrics=['accuracy'])"""
         self.discriminator.compile(loss=['binary_crossentropy'],
-                                   optimizer=Adam(),
+                                   optimizer=Adam(0.0002, 0.5),
                                    metrics=['accuracy'])
+        """self.discriminator.compile(loss=['binary_crossentropy'],
+                                   optimizer=Adam(),
+                                   metrics=['accuracy'])"""
 
         # build generator
         self.generator = self.build_generator()
@@ -66,12 +66,12 @@ class cGAN():
 
         # combining both models
         self.combined = Model([noise, label], valid)
-        """self.combined.compile(loss=['binary_crossentropy'],
-                              optimizer=Adam(0.0002, 0.5),
-                             metrics=['accuracy'])"""
         self.combined.compile(loss=['binary_crossentropy'],
-                              optimizer=Adam(),
+                              optimizer=Adam(0.0002, 0.5),
                              metrics=['accuracy'])
+        """self.combined.compile(loss=['binary_crossentropy'],
+                              optimizer=Adam(),
+                             metrics=['accuracy'])"""
         self.combined.summary()
 
     def wasserstein_loss(self, y_true, y_pred):
