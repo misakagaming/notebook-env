@@ -44,6 +44,9 @@ class cGAN():
 
         # build discriminator
         self.discriminator = self.build_discriminator()
+        """self.discriminator.compile(loss=['binary_crossentropy'],
+                                   optimizer=Adam(0.0002, 0.5),
+                                   metrics=['accuracy'])"""
         self.discriminator.compile(loss=['binary_crossentropy'],
                                    optimizer=Adam(),
                                    metrics=['accuracy'])
@@ -63,6 +66,9 @@ class cGAN():
 
         # combining both models
         self.combined = Model([noise, label], valid)
+        """self.combined.compile(loss=['binary_crossentropy'],
+                              optimizer=Adam(0.0002, 0.5),
+                             metrics=['accuracy'])"""
         self.combined.compile(loss=['binary_crossentropy'],
                               optimizer=Adam(),
                              metrics=['accuracy'])
@@ -280,7 +286,7 @@ gen_df_3 = pd.DataFrame(data = gen_samples_3,
 
 gen_df_3['Class'] = 1
 df_og_train = X_train
-df_og_train["Class"] = y_train["Class"].tolist()
+df_og_train["Class"] = y_train
 df_sum = pd.concat([gen_df_3, df_og_train], ignore_index=True, sort=False)
 df_sum = df_sum.sample(frac=1).reset_index(drop=True)
 
