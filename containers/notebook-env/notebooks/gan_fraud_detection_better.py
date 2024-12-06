@@ -45,7 +45,7 @@ class cGAN():
         # build discriminator
         self.discriminator = self.build_discriminator()
         self.discriminator.compile(loss=['binary_crossentropy'],
-                                   optimizer=Adam(0.0002, 0.5),
+                                   optimizer=Adam(),
                                    metrics=['accuracy'])
 
         # build generator
@@ -64,7 +64,7 @@ class cGAN():
         # combining both models
         self.combined = Model([noise, label], valid)
         self.combined.compile(loss=['binary_crossentropy'],
-                              optimizer=Adam(0.0002, 0.5),
+                              optimizer=Adam(),
                              metrics=['accuracy'])
         self.combined.summary()
 
