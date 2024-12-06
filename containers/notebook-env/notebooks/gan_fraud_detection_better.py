@@ -195,8 +195,8 @@ class cGAN():
 n = 100
 df = pd.read_csv('creditcard.csv', encoding='utf-8', sep=',')
 df = df.head(int(len(df)*(n/100)))
-df = df.drop(columns='Time', inplace=True)
-df.drop_duplicates(inplace=True)
+df = df.drop(columns='Time')
+df = df.drop_duplicates()
 
 df.Class.value_counts()
 
