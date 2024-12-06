@@ -195,7 +195,8 @@ class cGAN():
 n = 100
 df = pd.read_csv('creditcard.csv', encoding='utf-8', sep=',')
 df = df.head(int(len(df)*(n/100)))
-df = df.drop(columns='Time')
+df = df.drop(columns='Time', inplace=True)
+df.drop_duplicates(inplace=True)
 
 df.Class.value_counts()
 
@@ -222,8 +223,6 @@ cgan = cGAN()
 y_train = y_train.reshape(-1,1)
 pos_index = np.where(y_train==1)[0]
 neg_index = np.where(y_train==0)[0]
-cgan.train(X_train, y_train, pos_index, neg_index, epochs=2000, sample_interval=50)
-
 cgan.train(X_train, y_train, pos_index, neg_index, epochs=2000, sample_interval=50)
 
 
