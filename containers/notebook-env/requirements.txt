@@ -88,7 +88,6 @@ ecos==2.0.14
 editdistance==0.8.1
 eerepr==0.0.4
 einops==0.8.0
-en-core-web-sm @ https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.7.1/en_core_web_sm-3.7.1-py3-none-any.whl#sha256=86cc141f63942d4b2c5fcee06630fd6f904788d2f0ab005cce45aadb8fb73889
 entrypoints==0.4
 et_xmlfile==2.0.0
 etils==1.11.0
@@ -126,35 +125,6 @@ gin-config==0.5.0
 gitdb==4.0.11
 GitPython==3.1.43
 glob2==0.7
-google==2.0.3
-google-ai-generativelanguage==0.6.10
-google-api-core==2.19.2
-google-api-python-client==2.151.0
-google-auth==2.27.0
-google-auth-httplib2==0.2.0
-google-auth-oauthlib==1.2.1
-google-cloud-aiplatform==1.71.1
-google-cloud-bigquery==3.25.0
-google-cloud-bigquery-connection==1.16.1
-google-cloud-bigquery-storage==2.27.0
-google-cloud-bigtable==2.27.0
-google-cloud-core==2.4.1
-google-cloud-datastore==2.20.1
-google-cloud-firestore==2.19.0
-google-cloud-functions==1.18.1
-google-cloud-iam==2.16.1
-google-cloud-language==2.15.1
-google-cloud-pubsub==2.27.1
-google-cloud-resource-manager==1.13.1
-google-cloud-storage==2.8.0
-google-cloud-translate==3.17.0
-google-colab @ file:///colabtools/dist/google_colab-1.0.0.tar.gz
-google-crc32c==1.6.0
-google-generativeai==0.8.3
-google-pasta==0.2.0
-google-resumable-media==2.7.2
-googleapis-common-protos==1.66.0
-googledrivedownloader==0.4
 graphviz==0.20.3
 greenlet==3.1.1
 grpc-google-iam-v1==0.13.1
