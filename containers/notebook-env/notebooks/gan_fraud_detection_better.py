@@ -222,6 +222,10 @@ pos_index = np.where(y_train==1)[0]
 neg_index = np.where(y_train==0)[0]
 cgan.train(X_train, y_train, pos_index, neg_index, epochs=2000, sample_interval=50)
 
+
+cgan.generator.save("generator.keras")
+cgan.discriminator.save("discriminator.keras")
+
 noise = np.random.normal(0, 1, (227454, 32))
 sampled_labels = np.zeros(227454).reshape(-1, 1)
 
