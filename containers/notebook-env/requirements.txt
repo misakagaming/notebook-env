@@ -1,0 +1,13 @@
+torch
+torchvision
+torchaudio
+transformers==4.25.1
+transformers[torch]
+tree_sitter==0.20.1
+tensorboard>=2.4.1
+datasets
+evaluate
+numpy
+pandas
+scipy>=0.15.1
+scikit-learn>=0.18
