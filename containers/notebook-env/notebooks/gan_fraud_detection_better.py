@@ -165,6 +165,9 @@ class cGAN():
 
             # Train the discriminator
             self.discriminator.trainable = True
+            if epoch == 0:
+                print([samples, labels])
+                print(valid_smooth)
             d_loss_real = self.discriminator.train_on_batch([samples, labels], valid_smooth)
             d_loss_fake = self.discriminator.train_on_batch([gen_samples, labels], fake_smooth)
             d_loss = 0.5 * np.add(d_loss_real, d_loss_fake)
