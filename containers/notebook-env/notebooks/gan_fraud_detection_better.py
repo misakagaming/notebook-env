@@ -10,10 +10,6 @@ credit: https://www.kaggle.com/code/ttunjic/gans-for-tabular-data/notebook
 
 https://www.kaggle.com/code/techytushar/tabular-data-generation-using-gans
 """
-
-!pip install tensorflow
-!pip install dask[dataframe]
-
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
