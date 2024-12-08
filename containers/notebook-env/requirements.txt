@@ -2,8 +2,7 @@ numpy==1.26.4
 pandas==2.2.2
 gdown
 matplotlib==3.8.0
-keras==3.4.1
-tensorflow
+keras==2.3.1
 dask[dataframe]
 seaborn==0.13.2
 lightgbm==4.5.0
