@@ -24,7 +24,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 
 import lightgbm as lgb
-from tensorflow import keras
+import keras
 from keras.layers import Input, Dense, Reshape, Flatten, Dropout, multiply, Concatenate
 from keras.layers import BatchNormalization, Activation, Embedding, ZeroPadding2D, LeakyReLU
 from keras.models import Sequential, Model
