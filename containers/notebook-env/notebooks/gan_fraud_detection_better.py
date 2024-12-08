@@ -34,7 +34,7 @@ from keras.initializers import RandomNormal
 import keras.backend as K
 from sklearn.utils import shuffle
 
-np.random.seed(34)
+
 
 class cGAN():
     def __init__(self):
@@ -42,13 +42,12 @@ class cGAN():
         self.out_shape = 29
         self.num_classes = 2
         self.clip_value = 0.01
-        optimizer = Adam(0.0002, 0.5)
         #optimizer = RMSprop(lr=0.00005)
 
         # build discriminator
         self.discriminator = self.build_discriminator()
         self.discriminator.compile(loss=['binary_crossentropy'],
-                                   optimizer=optimizer,
+                                   optimizer=Adam(0.0002, 0.5),
                                    metrics=['accuracy'])
 
         # build generator
@@ -58,7 +57,7 @@ class cGAN():
         noise = Input(shape=(self.latent_dim,))
         label = Input(shape=(1,))
         gen_samples = self.generator([noise, label])
-
+        print(gen_samples)
         self.discriminator.trainable = False
 
         # passing gen samples through disc. 
@@ -67,7 +66,7 @@ class cGAN():
         # combining both models
         self.combined = Model([noise, label], valid)
         self.combined.compile(loss=['binary_crossentropy'],
-                              optimizer=optimizer,
+                              optimizer=Adam(0.0002, 0.5),
                              metrics=['accuracy'])
         self.combined.summary()
 
@@ -195,6 +194,8 @@ class cGAN():
                 plt.show()
                 plt.savefig('losses.png')
 
+
+np.random.seed(34)
 df = pd.read_csv('creditcard.csv', encoding='utf-8', sep=',')
 df = df.drop(columns='Time')
 df = df.drop_duplicates()
