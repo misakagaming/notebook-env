@@ -42,16 +42,14 @@ class cGAN():
         self.out_shape = 29
         self.num_classes = 2
         self.clip_value = 0.01
+        optimizer = Adam(0.0002, 0.5)
         #optimizer = RMSprop(lr=0.00005)
 
         # build discriminator
         self.discriminator = self.build_discriminator()
         self.discriminator.compile(loss=['binary_crossentropy'],
-                                   optimizer=Adam(0.0002, 0.5),
+                                   optimizer=optimizer,
                                    metrics=['accuracy'])
-        """self.discriminator.compile(loss=['binary_crossentropy'],
-                                   optimizer=Adam(),
-                                   metrics=['accuracy'])"""
 
         # build generator
         self.generator = self.build_generator()
@@ -63,17 +61,14 @@ class cGAN():
 
         self.discriminator.trainable = False
 
-        # passing gen samples through disc.
+        # passing gen samples through disc. 
         valid = self.discriminator([gen_samples, label])
 
         # combining both models
         self.combined = Model([noise, label], valid)
         self.combined.compile(loss=['binary_crossentropy'],
-                              optimizer=Adam(0.0002, 0.5),
+                              optimizer=optimizer,
                              metrics=['accuracy'])
-        """self.combined.compile(loss=['binary_crossentropy'],
-                              optimizer=Adam(),
-                             metrics=['accuracy'])"""
         self.combined.summary()
 
     def wasserstein_loss(self, y_true, y_pred):
@@ -104,31 +99,31 @@ class cGAN():
         noise = Input(shape=(self.latent_dim,))
         label = Input(shape=(1,), dtype='int32')
         label_embedding = Flatten()(Embedding(self.num_classes, self.latent_dim)(label))
-
+        
         model_input = multiply([noise, label_embedding])
         gen_sample = model(model_input)
 
         return Model([noise, label], gen_sample, name="Generator")
 
-
+    
     def build_discriminator(self):
         init = RandomNormal(mean=0.0, stddev=0.02)
         model = Sequential()
 
         model.add(Dense(512, input_dim=self.out_shape, kernel_initializer=init))
         model.add(LeakyReLU(alpha=0.2))
-
+        
         model.add(Dense(256, kernel_initializer=init))
         model.add(LeakyReLU(alpha=0.2))
         model.add(Dropout(0.4))
-
+        
         model.add(Dense(128, kernel_initializer=init))
         model.add(LeakyReLU(alpha=0.2))
         model.add(Dropout(0.4))
-
+        
         model.add(Dense(1, activation='sigmoid'))
         model.summary()
-
+        
         gen_sample = Input(shape=(self.out_shape,))
         label = Input(shape=(1,), dtype='int32')
         label_embedding = Flatten()(Embedding(self.num_classes, self.out_shape)(label))
@@ -144,13 +139,11 @@ class cGAN():
         # Adversarial ground truths
         valid = np.ones((batch_size, 1))
         fake = np.zeros((batch_size, 1))
-        global G_losses
-        global D_losses
-
-        G_losses = []
-        D_losses = []
+        global G_losses=[]
+        global D_losses=[]
+        
         for epoch in range(epochs):
-
+            
             #  Train Discriminator with 8 sample from postivite class and rest with negative class
             idx1 = np.random.choice(pos_index, 8)
             idx0 = np.random.choice(neg_index, batch_size-8)
@@ -168,9 +161,9 @@ class cGAN():
                 valid_smooth = (valid+0.1)-(np.random.random(valid.shape)*0.1)
                 fake_smooth = (fake-0.1)+(np.random.random(fake.shape)*0.1)
             else:
-                valid_smooth = valid
+                valid_smooth = valid 
                 fake_smooth = fake
-
+                
             # Train the discriminator
             self.discriminator.trainable = True
             d_loss_real = self.discriminator.train_on_batch([samples, labels], valid_smooth)
@@ -205,10 +198,7 @@ df = df.drop(columns='Time')
 df = df.drop_duplicates()
 
 df.Class.value_counts()
-skew_cols = df.drop(columns='Class').skew().loc[lambda x: x>2].index
-for col in skew_cols:
-    lower_lim = abs(df[col].min())
-    df[col] = df[col].apply(lambda x: np.log10(x+lower_lim+1))
+df['Amount'] = df['Amount'].apply(lambda x: np.log10(x+1))
 
 scaler = StandardScaler()
 
