@@ -209,8 +209,7 @@ df.Class.value_counts()
 skew_cols = df.drop(columns='Class').skew().loc[lambda x: x>2].index
 for col in skew_cols:
     lower_lim = abs(df[col].min())
-    normal_col = df[col].apply(lambda x: np.log10(x+lower_lim+1))
-df['Amount'] = df['Amount'].apply(lambda x: np.log10(x+1))
+    df[col] = df[col].apply(lambda x: np.log10(x+lower_lim+1))
 
 scaler = StandardScaler()
 
