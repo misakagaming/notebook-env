@@ -139,8 +139,10 @@ class cGAN():
         # Adversarial ground truths
         valid = np.ones((batch_size, 1))
         fake = np.zeros((batch_size, 1))
-        global G_losses=[]
-        global D_losses=[]
+        global G_losses
+        global D_losses
+        G_losses=[]
+        D_losses=[]
         
         for epoch in range(epochs):
             
