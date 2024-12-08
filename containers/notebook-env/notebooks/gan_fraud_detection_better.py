@@ -206,6 +206,8 @@ df = df.drop_duplicates()
 
 df.Class.value_counts()
 
+df['Amount'] = df['Amount'].apply(lambda x: np.log10(x+1))
+
 scaler = StandardScaler()
 
 X = scaler.fit_transform(df.drop(columns='Class'))
@@ -273,34 +275,3 @@ ConfusionMatrixDisplay.from_estimator(lgb_1, X_test, y_test)
 plt.show()
 plt.savefig('fig2.png')
 
-noise_3 = np.random.normal(0, 1, (219778, 32))
-sampled_labels_3 = np.ones(219778).reshape(-1, 1)
-
-
-gen_samples_3 = cgan.generator.predict([noise_3, sampled_labels_3])
-
-gen_df_3 = pd.DataFrame(data = gen_samples_3,
-                      columns = df.drop(columns="Class").columns)
-                      
-                     
-
-gen_df_3['Class'] = 1
-df_og_train = X_train
-df_og_train["Class"] = y_train
-df_sum = pd.concat([gen_df_3, df_og_train], ignore_index=True, sort=False)
-df_sum = df_sum.sample(frac=1).reset_index(drop=True)
-
-X_2 = df_sum.drop(columns="Class")
-y_2 = df_sum['Class'].values
-X_train_3, X_test_3, y_train_3, y_test_3 = train_test_split(X_2, y_2, test_size=0.2)
-
-lgb_2 = lgb.LGBMClassifier()
-lgb_2.fit(X_train_3, y_train_3)
-
-
-y_pred = lgb_2.predict(X_test)
-
-print(classification_report(y_test, y_pred))
-ConfusionMatrixDisplay.from_estimator(lgb_2, X_test, y_test)
-plt.show()
-plt.savefig('fig3.png')
