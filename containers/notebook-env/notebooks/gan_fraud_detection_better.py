@@ -21,6 +21,7 @@ from sklearn.metrics import precision_score, recall_score, f1_score,\
                             ConfusionMatrixDisplay, confusion_matrix
 from sklearn.model_selection import KFold, GridSearchCV
 from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
 
 import lightgbm as lgb
 from tensorflow import keras
@@ -205,7 +206,10 @@ df = df.drop(columns='Time')
 df = df.drop_duplicates()
 
 df.Class.value_counts()
-
+skew_cols = df.drop(columns='Class').skew().loc[lambda x: x>2].index
+for col in skew_cols:
+    lower_lim = abs(df[col].min())
+    normal_col = df[col].apply(lambda x: np.log10(x+lower_lim+1))
 df['Amount'] = df['Amount'].apply(lambda x: np.log10(x+1))
 
 scaler = StandardScaler()
@@ -237,8 +241,8 @@ cgan.train(X_train, y_train, pos_index, neg_index, epochs=2000, sample_interval=
 cgan.generator.save("generator.keras")
 cgan.discriminator.save("discriminator.keras")
 
-noise = np.random.normal(0, 1, (220154, 32))
-sampled_labels = np.zeros(220154).reshape(-1, 1)
+noise = np.random.normal(0, 1, (247670, 32))
+sampled_labels = np.zeros(247670).reshape(-1, 1)
 
 
 gen_samples = cgan.generator.predict([noise, sampled_labels])
@@ -246,8 +250,8 @@ gen_samples = cgan.generator.predict([noise, sampled_labels])
 gen_df = pd.DataFrame(data = gen_samples,
                       columns = df.drop(columns="Class").columns)
 
-noise_2 = np.random.normal(0, 1, (376, 32))
-sampled_labels_2 = np.ones(376).reshape(-1, 1)
+noise_2 = np.random.normal(0, 1, (426, 32))
+sampled_labels_2 = np.ones(426).reshape(-1, 1)
 
 
 gen_samples_2 = cgan.generator.predict([noise_2, sampled_labels_2])
