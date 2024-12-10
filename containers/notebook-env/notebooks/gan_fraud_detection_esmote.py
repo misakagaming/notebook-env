@@ -208,7 +208,7 @@ scaler = StandardScaler()
 X = scaler.fit_transform(df.drop(columns='Class'))
 y = df['Class'].values
 
-X_train, X_test, X_train, y_test = train_test_split(X, y, test_size=0.05, stratify=y)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.05, stratify=y)
 
 
 train_combined = pd.DataFrame(X_train)
