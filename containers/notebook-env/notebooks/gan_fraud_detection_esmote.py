@@ -224,7 +224,6 @@ dfs = np.array_split(train_combined,5)
 gans = []
 
 for count, df_sub in enumerate(dfs):
-    print(df_sub)
     X_train = df_sub.drop(columns='Class').to_numpy()
     y_train = df_sub['Class'].values
 
