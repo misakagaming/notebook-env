@@ -210,6 +210,8 @@ y = df['Class'].values
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.05, stratify=y)
 
+print(type(y_train))
+
 
 train_combined = pd.DataFrame(X_train)
 
@@ -250,7 +252,7 @@ for count, df_sub in enumerate(dfs):
     plt.savefig(f'fig1-{count+1}-smote.png')
 
     cgan = cGAN()
-
+    print(type(y_train))
     y_train = y_train.reshape(-1,1)
     pos_index = np.where(y_train==1)[0]
     neg_index = np.where(y_train==0)[0]
