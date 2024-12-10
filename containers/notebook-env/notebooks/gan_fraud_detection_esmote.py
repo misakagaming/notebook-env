@@ -238,7 +238,7 @@ for count, df_sub in enumerate(dfs):
     plt.show()
     plt.savefig(f'fig1-{count+1}.png')
     
-    smote=SMOTE(sampling_strategy='minority') 
+    """smote=SMOTE(sampling_strategy='minority') 
     X_train,y_train=smote.fit_resample(X_train,y_train)
     lgb_1 = lgb.LGBMClassifier()
     lgb_1.fit(X_train, y_train)
@@ -249,15 +249,12 @@ for count, df_sub in enumerate(dfs):
     print(classification_report(y_test, y_pred))
     ConfusionMatrixDisplay.from_estimator(lgb_1, X_test, y_test)
     plt.show()
-    plt.savefig(f'fig1-{count+1}-smote.png')
+    plt.savefig(f'fig1-{count+1}-smote.png')"""
 
     cgan = cGAN()
-    print(type(y_train))
     y_train = y_train.reshape(-1,1)
     pos_index = np.where(y_train==1)[0]
-    print(pos_index)
     neg_index = np.where(y_train==0)[0]
-    print(neg_index)
     cgan.train(X_train, y_train, pos_index, neg_index, count, epochs=2000, sample_interval=50)
 
 
