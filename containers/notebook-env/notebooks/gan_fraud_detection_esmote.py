@@ -255,7 +255,9 @@ for count, df_sub in enumerate(dfs):
     print(type(y_train))
     y_train = y_train.reshape(-1,1)
     pos_index = np.where(y_train==1)[0]
+    print(pos_index)
     neg_index = np.where(y_train==0)[0]
+    print(neg_index)
     cgan.train(X_train, y_train, pos_index, neg_index, count, epochs=2000, sample_interval=50)
 
 
