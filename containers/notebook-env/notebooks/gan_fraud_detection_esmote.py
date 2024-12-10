@@ -134,7 +134,7 @@ class cGAN():
         return Model(inputs=[gen_sample, label], outputs=validity, name="Discriminator")
 
 
-    def train(self, X_train, y_train, pos_index, neg_index, epochs, count, batch_size=32, sample_interval=50):
+    def train(self, X_train, y_train, pos_index, neg_index, count, epochs, batch_size=32, sample_interval=50):
 
         # Adversarial ground truths
         valid = np.ones((batch_size, 1))
@@ -254,7 +254,7 @@ for count, df_sub in enumerate(dfs):
     y_train = y_train.reshape(-1,1)
     pos_index = np.where(y_train==1)[0]
     neg_index = np.where(y_train==0)[0]
-    cgan.train(X_train, y_train, pos_index, neg_index, epochs=2000, count, sample_interval=50)
+    cgan.train(X_train, y_train, pos_index, neg_index, count, epochs=2000, sample_interval=50)
 
 
     cgan.generator.save(f"generator-{count+1}.keras")
