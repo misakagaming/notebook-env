@@ -36,6 +36,9 @@ from sklearn.utils import shuffle
 from imblearn.over_sampling import SMOTE
 
 
+np.random.seed(34)
+
+
 
 class cGAN():
     def __init__(self):
@@ -208,7 +211,7 @@ scaler = StandardScaler()
 X = scaler.fit_transform(df.drop(columns='Class'))
 y = df['Class'].values
 
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.05, stratify=y)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.1, stratify=y)
 
 print(type(y_train))
 
