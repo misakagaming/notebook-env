@@ -222,7 +222,13 @@ column_series = y_train.tolist()
 
 train_combined['Class'] = column_series
 
-dfs = np.array_split(train_combined,5)
+notfraud=train_combined[train_combined.Class==0]
+fraud=train_combined[train_combined.Class==1]
+
+dfs = np.array_split(notfraud,60)
+
+for count, df_sub in enumerate(dfs):
+    dfs[count] = pd.concat([df_sub, fraud])
 
 gans = []
 
@@ -262,7 +268,6 @@ for count, df_sub in enumerate(dfs):
 
 
     cgan.generator.save(f"generator-{count+1}.keras")
-    cgan.discriminator.save(f"discriminator-{count+1}.keras")
     gans.append(cgan)
 
     """noise = np.random.normal(0, 1, (52286, 32))
