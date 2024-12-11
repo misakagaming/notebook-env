@@ -182,7 +182,7 @@ class cGAN():
 
             # Plot the progress
             if (epoch+1)%sample_interval==0:
-                print (f"{epoch} [D loss: {d_loss[0]}, acc.: {100*d_loss[1]}] [G loss: {g_loss}]")
+                print (f"[Generator] {count+1}: {epoch} [D loss: {d_loss[0]}, acc.: {100*d_loss[1]}] [G loss: {g_loss}]")
             G_losses.append(g_loss[0])
             D_losses.append(d_loss[0])
             if epoch+1==epochs:
