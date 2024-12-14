@@ -268,6 +268,7 @@ for count, df_sub in enumerate(dfs):
 
 
     cgan.generator.save(f"generator-{count+1}.keras")
+    cgan.discriminator.save(f"discriminator-{count+1}.keras")
     gans.append(cgan)
 
     """noise = np.random.normal(0, 1, (52286, 32))

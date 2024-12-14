@@ -224,4 +224,5 @@ cgan.train(X_train, y_train, pos_index, neg_index, epochs=2000, sample_interval=
 
 
 cgan.generator.save(f"generator-smote.keras")
+cgan.discriminator.save(f"discriminator-smote.keras")
 
