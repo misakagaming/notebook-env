@@ -352,11 +352,6 @@ class cGAN():
             G_losses.append(g_loss[0])
             D_losses.append(d_loss[0])
 
-!ls /root/.cache/kagglehub/datasets/sgpjesus/bank-account-fraud-dataset-neurips-2022/versions/2
-
-!ls /root/.cache/kagglehub/datasets/ealaxi/paysim1/versions/2
-
-!ls /root/.cache/kagglehub/datasets/ealtman2019/credit-card-transactions/versions/8
 
 baf = ["variant1", "variant2", "variant3", "variant4", "variant5", "baf_base"]
 
