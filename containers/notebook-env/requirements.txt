@@ -7,7 +7,7 @@ matplotlib
 seaborn
 lightgbm
 scikit-image
-scikit-learn====1.3.1
+scikit-learn==1.3.1
 imblearn
 kagglehub
 pyod
