@@ -365,8 +365,8 @@ data_name = "variant1"
 #data_name = "paysim"
 #data_name = "cct"
 
-for data_name in ["variant1", "variant2", "variant3", "variant4", "variant5", "baf_base", "eucch", "paysim", "cct"]:
-
+#for data_name in ["variant1", "variant2", "variant3", "variant4", "variant5", "baf_base", "eucch", "paysim", "cct"]:
+for data_name in ["cct"]:
     match data_name:
       case "variant1":
         df = pd.read_csv(f'{path}/Variant I.csv', encoding='utf-8', sep=',')
@@ -385,7 +385,7 @@ for data_name in ["variant1", "variant2", "variant3", "variant4", "variant5", "b
       case "paysim":
         df = pd.read_csv(f'{path2}/PS_20174392719_1491204439457_log.csv', encoding='utf-8', sep=',')
       case "cct":
-        df = pd.read_csv(f'{path3}/credit_card_transactions-ibm_v2.csv', encoding='utf-8', sep=',', nrows=2438690)
+        df = pd.read_csv(f'{path3}/credit_card_transactions-ibm_v2.csv', encoding='utf-8', sep=',', nrows=24386900)
       case default:
         print("Invalid data name")
 
