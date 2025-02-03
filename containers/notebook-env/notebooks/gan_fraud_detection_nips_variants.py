@@ -365,7 +365,7 @@ data_name = "variant1"
 #data_name = "paysim"
 #data_name = "cct"
 
-for data_name in ["variant1", "variant2", "variant3", "variant4", "variant5", "baf_base", "eucch", "paysim", "cct"]
+for data_name in ["variant1", "variant2", "variant3", "variant4", "variant5", "baf_base", "eucch", "paysim", "cct"]:
 
     match data_name:
       case "variant1":
