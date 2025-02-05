@@ -355,7 +355,7 @@ class cGAN():
 
 baf = ["variant1", "variant2", "variant3", "variant4", "variant5", "baf_base"]
 
-data_name = "variant1"
+#data_name = "variant1"
 #data_name = "variant2"
 #data_name = "variant3"
 #data_name = "variant4"
@@ -364,6 +364,9 @@ data_name = "variant1"
 #data_name = "eucch"
 #data_name = "paysim"
 #data_name = "cct"
+
+conceptDrift = True
+
 
 #for data_name in ["variant1", "variant2", "variant3", "variant4", "variant5", "baf_base", "eucch", "paysim", "cct"]:
 for data_name in ["cct"]:
@@ -426,7 +429,7 @@ for data_name in ["cct"]:
       print(df["Is Fraud?"].value_counts())
 
     scaler = StandardScaler()
-
+    
     if data_name in baf:
       X = scaler.fit_transform(df.drop(columns='fraud_bool'))
       y = df['fraud_bool'].values
@@ -436,11 +439,18 @@ for data_name in ["cct"]:
     elif data_name == "paysim":
       X = scaler.fit_transform(df.drop(columns='isFraud'))
       y = df['isFraud'].values
+    if data_name == "cct" and conceptDrift:
+      test_cd = df.loc[df["Month"].isin([11,12])]
+      train_cd = df.loc[~df["Month"].isin([11,12])]
+      X_train = scaler.fit_transform(train_cd.drop(columns='Is Fraud?'))
+      y_train = train_cd['Is Fraud?'].values
+      X_test = scaler.fit_transform(test_cd.drop(columns='Is Fraud?'))
+      y_test = test_cd['Is Fraud?'].values
     elif data_name == "cct":
       X = scaler.fit_transform(df.drop(columns='Is Fraud?'))
       y = df['Is Fraud?'].values
-
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.1, stratify=y, random_state=42)
+    if not conceptDrift:
+      X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.1, stratify=y, random_state=42)
 
     f1_no_preprocess=[]
     f1_smote=[]
