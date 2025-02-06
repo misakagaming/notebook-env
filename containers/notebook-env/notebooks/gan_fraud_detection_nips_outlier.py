@@ -572,3 +572,29 @@ X_train_2 = X_train[:, top2]
 X_test_2 = X_test[:, top2]
 visualize(clf_name, X_train_2, y_train, X_test_2, y_test, y_train_pred,
             y_test_pred, show_figure=True, save_figure=True)
+            
+"""KNN"""
+
+clf_name = 'KNN'
+clf = KNN()
+clf.fit(X_train)
+
+# get the prediction labels and outlier scores of the training data
+y_train_pred = clf.labels_  # binary labels (0: inliers, 1: outliers)
+y_train_scores = clf.decision_scores_  # raw outlier scores
+
+# get the prediction on the test data
+y_test_pred = clf.predict(X_test)  # outlier labels (0 or 1)
+y_test_scores = clf.decision_function(X_test)  # outlier scores
+
+# evaluate and print the results
+print("\nOn Training Data:")
+evaluate_print(clf_name, y_train, y_train_scores)
+print("\nOn Test Data:")
+evaluate_print(clf_name, y_test, y_test_scores)
+
+# visualize the results
+X_train_2 = X_train[:, top2]
+X_test_2 = X_test[:, top2]
+visualize(clf_name, X_train_2, y_train, X_test_2, y_test, y_train_pred,
+            y_test_pred, show_figure=True, save_figure=True)
