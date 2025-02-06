@@ -152,7 +152,6 @@ def plot_roc_curves(fpr_list, tpr_list, label_list):
     plt.ylabel('True Positive Rate')
     plt.title('Receiver Operating Characteristic (ROC) Curve')
     plt.legend()
-    plt.show()
 
 def test_classifier(classifier, X_test, y_test):
     """
@@ -202,7 +201,6 @@ def test_classifier(classifier, X_test, y_test):
     plt.tight_layout()
 
     # Display the plots
-    plt.show()
 
     return fpr, tpr, default_recall, target_recall
 
@@ -388,7 +386,7 @@ for data_name in ["cct"]:
       case "paysim":
         df = pd.read_csv(f'{path2}/PS_20174392719_1491204439457_log.csv', encoding='utf-8', sep=',')
       case "cct":
-        df = pd.read_csv(f'{path3}/credit_card_transactions-ibm_v2.csv', encoding='utf-8', sep=',', nrows=24386900)
+        df = pd.read_csv(f'{path3}/credit_card_transactions-ibm_v2.csv', encoding='utf-8', sep=',', nrows=2438690)
       case default:
         print("Invalid data name")
 
@@ -441,8 +439,8 @@ for data_name in ["cct"]:
       X = scaler.fit_transform(df.drop(columns='isFraud'))
       y = df['isFraud'].values
     if data_name == "cct" and conceptDrift:
-      test_cd = df[df["Month"]==months[start+8]]
-      train_cd = df.loc[df["Month"].isin(months[start:start+8])]
+      test_cd = df[df["Month"]==months[start+9]]
+      train_cd = df.loc[df["Month"].isin(months[start:start+9])]
       X_train = scaler.fit_transform(train_cd.drop(columns='Is Fraud?'))
       y_train = train_cd['Is Fraud?'].values
       X_test = scaler.fit_transform(test_cd.drop(columns='Is Fraud?'))
@@ -665,7 +663,6 @@ for data_name in ["cct"]:
     disp = ConfusionMatrixDisplay(confusion_matrix=cm)
     disp.plot()
 
-    plt.show()
 
     _, recall, _, _ = precision_recall_fscore_support(y_test, results)
     f1_rf.append(recall[1])
@@ -794,7 +791,6 @@ for data_name in ["cct"]:
     disp = ConfusionMatrixDisplay(confusion_matrix=cm)
     disp.plot()
 
-    plt.show()
 
     _, recall, _, _ = precision_recall_fscore_support(y_test, results)
     f1_lr.append(recall[1])
@@ -922,7 +918,6 @@ for data_name in ["cct"]:
     disp = ConfusionMatrixDisplay(confusion_matrix=cm)
     disp.plot()
 
-    plt.show()
 
     _, recall, _, _ = precision_recall_fscore_support(y_test, results)
     f1_dt.append(recall[1])
@@ -1050,7 +1045,6 @@ for data_name in ["cct"]:
     disp = ConfusionMatrixDisplay(confusion_matrix=cm)
     disp.plot()
 
-    plt.show()
 
     _, recall, _, _ = precision_recall_fscore_support(y_test, results)
     f1_lgb.append(recall[1])
@@ -1178,7 +1172,6 @@ for data_name in ["cct"]:
     disp = ConfusionMatrixDisplay(confusion_matrix=cm)
     disp.plot()
 
-    plt.show()
 
     _, recall, _, _ = precision_recall_fscore_support(y_test, results)
     f1_xgb.append(recall[1])
@@ -1306,7 +1299,6 @@ for data_name in ["cct"]:
     disp = ConfusionMatrixDisplay(confusion_matrix=cm)
     disp.plot()
 
-    plt.show()
 
     _, recall, _, _ = precision_recall_fscore_support(y_test, results)
     f1_mlp.append(recall[1])
@@ -1347,50 +1339,3 @@ for data_name in ["cct"]:
     plt.legend()
     plt.savefig(f"{data_name}-{start}.png")
     plt.show()
-
-"""PyOD
-
-ECOD
-"""
-
-
-clf_name = 'ECOD'
-clf = ECOD()
-clf.fit(X_train)
-
-y_train_pred = clf.labels_  # binary labels (0: inliers, 1: outliers)
-y_train_scores = clf.decision_scores_  # raw outlier scores
-
-# get the prediction on the test data
-y_test_pred = clf.predict(X_test)  # outlier labels (0 or 1)
-y_test_scores = clf.decision_function(X_test)  # outlier scores
-
-# evaluate and print the results
-print("\nOn Training Data:")
-evaluate_print(clf_name, y_train, y_train_scores)
-print("\nOn Test Data:")
-evaluate_print(clf_name, y_test, y_test_scores)
-
-"""IForest"""
-
-clf_name = 'IForest'
-clf = IForest()
-clf.fit(X_train)
-
-# get the prediction labels and outlier scores of the training data
-y_train_pred = clf.labels_  # binary labels (0: inliers, 1: outliers)
-y_train_scores = clf.decision_scores_  # raw outlier scores
-
-# get the prediction on the test data
-y_test_pred = clf.predict(X_test)  # outlier labels (0 or 1)
-y_test_scores = clf.decision_function(X_test)  # outlier scores
-
-# evaluate and print the results
-print("\nOn Training Data:")
-evaluate_print(clf_name, y_train, y_train_scores)
-print("\nOn Test Data:")
-evaluate_print(clf_name, y_test, y_test_scores)
-
-# example of the feature importance
-feature_importance = clf.feature_importances_
-print("Feature importance", feature_importance)
