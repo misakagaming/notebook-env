@@ -7,7 +7,7 @@ Original file is located at
     https://colab.research.google.com/drive/1tRAK7dZdQYtmDeaWo-mpfJWXfhpUajjh
 """
 
-
+import sys
 import kagglehub
 from pyod.models.ecod import ECOD
 from pyod.utils.data import generate_data
@@ -429,7 +429,8 @@ for data_name in ["cct"]:
       print(df["Is Fraud?"].value_counts())
 
     scaler = StandardScaler()
-    
+    months = range(12)
+    start = sys.argv[1]
     if data_name in baf:
       X = scaler.fit_transform(df.drop(columns='fraud_bool'))
       y = df['fraud_bool'].values
@@ -440,8 +441,8 @@ for data_name in ["cct"]:
       X = scaler.fit_transform(df.drop(columns='isFraud'))
       y = df['isFraud'].values
     if data_name == "cct" and conceptDrift:
-      test_cd = df.loc[df["Month"].isin([11,12])]
-      train_cd = df.loc[~df["Month"].isin([11,12])]
+      test_cd = df.loc[df["Month"].isin(month[start+8])]
+      train_cd = df.loc[df["Month"].isin(month[start:start+8])]
       X_train = scaler.fit_transform(train_cd.drop(columns='Is Fraud?'))
       y_train = train_cd['Is Fraud?'].values
       X_test = scaler.fit_transform(test_cd.drop(columns='Is Fraud?'))
@@ -1344,7 +1345,7 @@ for data_name in ["cct"]:
             ["Random Forest", "Logistic Regression", "Decision Tree", "Light GBM", "XGBoost", "MLP"])
 
     plt.legend()
-    plt.savefig(f"{data_name}.png")
+    plt.savefig(f"{data_name}-{start}.png")
     plt.show()
 
 """PyOD
