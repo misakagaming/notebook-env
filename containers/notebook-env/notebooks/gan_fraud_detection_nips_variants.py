@@ -429,7 +429,7 @@ for data_name in ["cct"]:
       print(df["Is Fraud?"].value_counts())
 
     scaler = StandardScaler()
-    months = range(12)
+    months = [1,2,3,4,5,6,7,8,9,10,11,12]
     start = sys.argv[1]
     if data_name in baf:
       X = scaler.fit_transform(df.drop(columns='fraud_bool'))
