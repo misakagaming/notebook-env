@@ -441,8 +441,8 @@ for data_name in ["cct"]:
       X = scaler.fit_transform(df.drop(columns='isFraud'))
       y = df['isFraud'].values
     if data_name == "cct" and conceptDrift:
-      test_cd = df.loc[df["Month"].isin(month[start+8])]
-      train_cd = df.loc[df["Month"].isin(month[start:start+8])]
+      test_cd = df.loc[df["Month"].isin(months[start+8])]
+      train_cd = df.loc[df["Month"].isin(months[start:start+8])]
       X_train = scaler.fit_transform(train_cd.drop(columns='Is Fraud?'))
       y_train = train_cd['Is Fraud?'].values
       X_test = scaler.fit_transform(test_cd.drop(columns='Is Fraud?'))
