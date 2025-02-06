@@ -550,7 +550,7 @@ visualize(clf_name, X_train_2, y_train, X_test_2, y_test, y_train_pred,
 """DevNet"""
 
 clf_name = 'DevNet'
-clf = DevNet(random_state=42)
+clf = DevNet()
 clf.fit(X_train, y_train)
 
 # get the prediction labels and outlier scores of the training data
