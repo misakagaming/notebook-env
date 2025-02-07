@@ -429,6 +429,7 @@ for data_name in ["cct"]:
     scaler = StandardScaler()
     months = [1,2,3,4,5,6,7,8,9,10,11,12]
     start = int(sys.argv[1])
+    shift = int(sys.argv[2])
     if data_name in baf:
       X = scaler.fit_transform(df.drop(columns='fraud_bool'))
       y = df['fraud_bool'].values
@@ -439,7 +440,7 @@ for data_name in ["cct"]:
       X = scaler.fit_transform(df.drop(columns='isFraud'))
       y = df['isFraud'].values
     if data_name == "cct" and conceptDrift:
-      test_cd = df[df["Month"]==months[start+9]]
+      test_cd = df[df["Month"]==months[start+9+shift]]
       train_cd = df.loc[df["Month"].isin(months[start:start+9])]
       X_train = scaler.fit_transform(train_cd.drop(columns='Is Fraud?'))
       y_train = train_cd['Is Fraud?'].values
@@ -1337,5 +1338,5 @@ for data_name in ["cct"]:
             ["Random Forest", "Logistic Regression", "Decision Tree", "Light GBM", "XGBoost", "MLP"])
 
     plt.legend()
-    plt.savefig(f"{data_name}-{start}.png")
+    plt.savefig(f"{data_name}-{start}-{shift}.png")
     plt.show()
