@@ -364,7 +364,7 @@ baf = ["variant1", "variant2", "variant3", "variant4", "variant5", "baf_base"]
 #data_name = "paysim"
 #data_name = "cct"
 
-conceptDrift = sys.argv[3]
+conceptDrift = int(sys.argv[3])
 
 
 #for data_name in ["variant1", "variant2", "variant3", "variant4", "variant5", "baf_base", "eucch", "paysim", "cct"]:
