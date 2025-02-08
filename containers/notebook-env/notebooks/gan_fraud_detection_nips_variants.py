@@ -367,8 +367,8 @@ baf = ["variant1", "variant2", "variant3", "variant4", "variant5", "baf_base"]
 conceptDrift = int(sys.argv[3])
 
 
-for data_name in ["variant1", "variant2", "variant3", "variant4", "variant5", "baf_base", "eucch", "paysim", "cct"]:
-#for data_name in ["cct"]:
+#for data_name in ["variant1", "variant2", "variant3", "variant4", "variant5", "baf_base", "eucch", "paysim", "cct"]:
+for data_name in ["cct"]:
     match data_name:
       case "variant1":
         df = pd.read_csv(f'{path}/Variant I.csv', encoding='utf-8', sep=',')
@@ -1404,5 +1404,8 @@ for data_name in ["variant1", "variant2", "variant3", "variant4", "variant5", "b
             ["Random Forest", "Logistic Regression", "Decision Tree", "Light GBM", "XGBoost", "MLP"])
 
     plt.legend()
-    plt.savefig(f"{data_name}-{start}-{shift}.png")
+    if conceptDrift:
+        plt.savefig(f"{data_name}-{start}-{shift}.png")
+    else:
+        plt.savefig(f"{data_name}.png")
     plt.show()
