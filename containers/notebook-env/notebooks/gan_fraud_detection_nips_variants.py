@@ -363,11 +363,11 @@ baf = ["variant1", "variant2", "variant3", "variant4", "variant5", "baf_base"]
 #data_name = "paysim"
 #data_name = "cct"
 
-conceptDrift = True
+conceptDrift = sys.argv[3]
 
 
 #for data_name in ["variant1", "variant2", "variant3", "variant4", "variant5", "baf_base", "eucch", "paysim", "cct"]:
-for data_name in ["cct"]:
+for data_name in ["eucch"]:
     match data_name:
       case "variant1":
         df = pd.read_csv(f'{path}/Variant I.csv', encoding='utf-8', sep=',')
