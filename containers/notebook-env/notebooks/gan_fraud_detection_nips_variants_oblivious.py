@@ -498,9 +498,9 @@ for content_drift_type in ["incremental", "oblivious", "sliding_window"]:
                     test_cds.append(df[df["Month"]==months[i]])
                     train_cds.append(df.loc[df["Month"].isin(months[i-6:i])])
             if content_drift_type == "incremental":
-                test_cds.append(df[df["Month"]==months[4]])
-                train_cds.append(df.loc[df["Month"].isin(months[0:4])])
-                for i in range(5,8):
+                test_cds.append(df[df["Month"]==months[6]])
+                train_cds.append(df.loc[df["Month"].isin(months[0:6])])
+                for i in range(7,12):
                     test_cds.append(df[df["Month"]==months[i]])
                     train_cds.append(df[df["Month"]==months[i-1]])            
         elif data_name == "cct":
@@ -574,7 +574,7 @@ for content_drift_type in ["incremental", "oblivious", "sliding_window"]:
             f1_smote.append(xgb_results[3][1])
 
             """GAN"""
-            if concept_drift_types != "incremental" or (concept_drift_types == "incremental" and first_gan):
+            if concept_drift_type != "incremental" or (concept_drift_type == "incremental" and first_gan):
                 cgan = cGAN(X_train.shape[1])
                 first_gan = False
 
