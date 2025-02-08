@@ -452,8 +452,8 @@ for content_drift_type in ["oblivious", "sliding_window"]:
             train_cds = []
             if content_drift_type == "oblivious":
                 for i in range(4,8):
-                    test_cds.append(df[df["Month"]==months[i]])
-                    train_cds.append(df.loc[df["Month"].isin(months[0:4])])
+                    test_cds.append(df[df["month"]==months[i]])
+                    train_cds.append(df.loc[df["month"].isin(months[0:4])])
             if content_drift_type == "sliding_window":
                 for i in range(4,8):
                     test_cds.append(df[df["Month"]==months[i]])
