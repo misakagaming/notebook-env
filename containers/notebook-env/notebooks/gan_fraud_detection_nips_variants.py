@@ -650,17 +650,7 @@ for data_name in ["cct"]:
         test.append([k for k in probs[j]])
     true_probs = np.array(test)
     norm_weights = [float(i)/sum(weights) for i in weights]
-    totals = []
 
-    for i in range(len(y_test)):
-      total = 0
-      for j in range(rf_count):
-        total += true_probs[j][i]
-      totals.append(total)
-
-    for i in range(len(y_test)):
-      for j in range(rf_count):
-        true_probs[j][i] /= totals[i]
 
     results = []
     count_fraud=0
@@ -789,17 +779,7 @@ for data_name in ["cct"]:
         test.append([k for k in probs[j]])
     true_probs = np.array(test)
     norm_weights = [float(i)/sum(weights) for i in weights]
-    totals = []
 
-    for i in range(len(y_test)):
-      total = 0
-      for j in range(rf_count):
-        total += true_probs[j][i]
-      totals.append(total)
-
-    for i in range(len(y_test)):
-      for j in range(rf_count):
-        true_probs[j][i] /= totals[i]
     results = []
     count_fraud=0
     count_notfraud=0
@@ -926,17 +906,7 @@ for data_name in ["cct"]:
         test.append([k for k in probs[j]])
     true_probs = np.array(test)
     norm_weights = [float(i)/sum(weights) for i in weights]
-    totals = []
 
-    for i in range(len(y_test)):
-      total = 0
-      for j in range(rf_count):
-        total += true_probs[j][i]
-      totals.append(total)
-
-    for i in range(len(y_test)):
-      for j in range(rf_count):
-        true_probs[j][i] /= totals[i]
     results = []
     count_fraud=0
     count_notfraud=0
@@ -1063,17 +1033,7 @@ for data_name in ["cct"]:
         test.append([k for k in probs[j]])
     true_probs = np.array(test)
     norm_weights = [float(i)/sum(weights) for i in weights]
-    totals = []
 
-    for i in range(len(y_test)):
-      total = 0
-      for j in range(rf_count):
-        total += true_probs[j][i]
-      totals.append(total)
-
-    for i in range(len(y_test)):
-      for j in range(rf_count):
-        true_probs[j][i] /= totals[i]
     results = []
     count_fraud=0
     count_notfraud=0
@@ -1200,17 +1160,7 @@ for data_name in ["cct"]:
         test.append([k for k in probs[j]])
     true_probs = np.array(test)
     norm_weights = [float(i)/sum(weights) for i in weights]
-    totals = []
 
-    for i in range(len(y_test)):
-      total = 0
-      for j in range(rf_count):
-        total += true_probs[j][i]
-      totals.append(total)
-
-    for i in range(len(y_test)):
-      for j in range(rf_count):
-        true_probs[j][i] /= totals[i]
     results = []
     count_fraud=0
     count_notfraud=0
@@ -1337,17 +1287,7 @@ for data_name in ["cct"]:
         test.append([k for k in probs[j]])
     true_probs = np.array(test)
     norm_weights = [float(i)/sum(weights) for i in weights]
-    totals = []
 
-    for i in range(len(y_test)):
-      total = 0
-      for j in range(rf_count):
-        total += true_probs[j][i]
-      totals.append(total)
-
-    for i in range(len(y_test)):
-      for j in range(rf_count):
-        true_probs[j][i] /= totals[i]
     results = []
     count_fraud=0
     count_notfraud=0
