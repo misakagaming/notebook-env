@@ -377,12 +377,12 @@ for i in range(60):
 #concept_drift_types = ["oblivious", "sliding_window"]
 first_gan = False
 #for data_name in ["variant1", "variant2", "variant3", "variant4", "variant5", "baf_base", "eucch", "paysim", "cct"]:
-for content_drift_type in ["incremental", "oblivious", "sliding_window"]:
-    if content_drift_type == "incremental":
+for concept_drift_type in ["incremental", "oblivious", "sliding_window"]:
+    if concept_drift_type == "incremental":
         first_gan = True
     else:
         first_gan = False
-    print(content_drift_type)
+    print(concept_drift_type)
     data_names = ["cct", "baf_base", "variant4", "variant5"]
     no_preprocess_mean = []
     no_preprocess_stdev = []
@@ -463,15 +463,15 @@ for content_drift_type in ["incremental", "oblivious", "sliding_window"]:
         if data_name in baf and conceptDrift:
             test_cds = []
             train_cds = []
-            if content_drift_type == "oblivious":
+            if concept_drift_type == "oblivious":
                 for i in range(4,8):
                     test_cds.append(df[df["month"]==months[i]])
                     train_cds.append(df.loc[df["month"].isin(months[0:4])])
-            if content_drift_type == "sliding_window":
+            if concept_drift_type == "sliding_window":
                 for i in range(4,8):
                     test_cds.append(df[df["month"]==months[i]])
                     train_cds.append(df.loc[df["month"].isin(months[i-4:i])])
-            if content_drift_type == "incremental":
+            if concept_drift_type == "incremental":
                 test_cds.append(df[df["month"]==months[4]])
                 train_cds.append(df.loc[df["month"].isin(months[0:4])])
                 for i in range(5,8):
@@ -489,15 +489,15 @@ for content_drift_type in ["incremental", "oblivious", "sliding_window"]:
         if data_name == "cct" and conceptDrift:
             test_cds = []
             train_cds = []
-            if content_drift_type == "oblivious":
+            if concept_drift_type == "oblivious":
                 for i in range(6,12):
                     test_cds.append(df[df["Month"]==months[i]])
                     train_cds.append(df.loc[df["Month"].isin(months[0:6])])
-            if content_drift_type == "sliding_window":
+            if concept_drift_type == "sliding_window":
                 for i in range(6,12):
                     test_cds.append(df[df["Month"]==months[i]])
                     train_cds.append(df.loc[df["Month"].isin(months[i-6:i])])
-            if content_drift_type == "incremental":
+            if concept_drift_type == "incremental":
                 test_cds.append(df[df["Month"]==months[6]])
                 train_cds.append(df.loc[df["Month"].isin(months[0:6])])
                 for i in range(7,12):
@@ -533,7 +533,7 @@ for content_drift_type in ["incremental", "oblivious", "sliding_window"]:
 
             No data processing
             """
-            if content_drift_type == "incremental":
+            if concept_drift_type == "incremental":
                 xgb_1 = xgb_inc_np
             else:
                 xgb_1 = XGBClassifier(random_state=42, scale_pos_weight=0.5, objective=objective)
@@ -544,7 +544,7 @@ for content_drift_type in ["incremental", "oblivious", "sliding_window"]:
             # evaluation
             print(classification_report(y_test, y_pred))
             xgb_results = test_classifier(xgb_1, X_test, y_test)
-            if content_drift_type == "incremental":
+            if concept_drift_type == "incremental":
                 xgb_inc_np = xgb_1            
 
             f1_xgb =[]
@@ -555,7 +555,7 @@ for content_drift_type in ["incremental", "oblivious", "sliding_window"]:
 
             smote=SMOTE(sampling_strategy='minority')
             X_train_2,y_train_2=smote.fit_resample(X_train,y_train)
-            if content_drift_type == "incremental":
+            if concept_drift_type == "incremental":
                 xgb_1 = xgb_inc_smote
             else:
                 xgb_1 = XGBClassifier(random_state=42, scale_pos_weight=0.5, objective=objective)
@@ -567,7 +567,7 @@ for content_drift_type in ["incremental", "oblivious", "sliding_window"]:
             print(classification_report(y_test, y_pred))
             xgb_results = test_classifier(xgb_1, X_test, y_test)
             
-            if content_drift_type == "incremental":
+            if concept_drift_type == "incremental":
                 xgb_inc_smote = xgb_1
             
             f1_xgb.append(xgb_results[3][1])
@@ -665,7 +665,7 @@ for content_drift_type in ["incremental", "oblivious", "sliding_window"]:
               X_train_3 = df_combined.drop(columns='Is Fraud?').to_numpy()
               y_train_3 = df_combined['Is Fraud?'].values
 
-            if content_drift_type == "incremental":
+            if concept_drift_type == "incremental":
                 xgb_1 = xgb_inc_gan
             else:
                 xgb_1 = XGBClassifier(random_state=42, scale_pos_weight=0.5, objective=objective)
@@ -676,7 +676,7 @@ for content_drift_type in ["incremental", "oblivious", "sliding_window"]:
             # evaluation
             print(classification_report(y_test, y_pred))
             xgb_results = test_classifier(xgb_1, X_test, y_test)
-            if content_drift_type == "incremental":
+            if concept_drift_type == "incremental":
                 xgb_inc_gan = xgb_1
 
             f1_xgb.append(xgb_results[3][1])
@@ -701,13 +701,13 @@ for content_drift_type in ["incremental", "oblivious", "sliding_window"]:
                   X_train_4 = scaler.fit_transform(df_sub.drop(columns='Is Fraud?'))
                   y_train_4 = df_sub['Is Fraud?'].values
                 X_train_4,y_train_4=smote.fit_resample(X_train_4,y_train_4)
-                if content_drift_type == "incremental":
+                if concept_drift_type == "incremental":
                     rf_1 = xgb_inc_esmote[count]
                 else:
                     rf_1 = XGBClassifier(random_state=42, scale_pos_weight=0.5, objective=objective)
                 rf_1.fit(X_train_4, y_train_4)
                 rfs.append(rf_1)
-                if content_drift_type == "incremental":
+                if concept_drift_type == "incremental":
                     xgb_inc_esmote[count] = rf_1
 
             preds=[]
@@ -791,4 +791,4 @@ for content_drift_type in ["incremental", "oblivious", "sliding_window"]:
             'GAN': gan,
             'ESMOTE': esmote}
     df = pd.DataFrame(data)
-    df.to_csv(f'{content_drift_type}.csv', index=False)  
+    df.to_csv(f'{concept_drift_type}.csv', index=False)  
