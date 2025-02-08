@@ -378,10 +378,7 @@ for i in range(60):
 first_gan = False
 #for data_name in ["variant1", "variant2", "variant3", "variant4", "variant5", "baf_base", "eucch", "paysim", "cct"]:
 for concept_drift_type in ["incremental", "oblivious", "sliding_window"]:
-    if concept_drift_type == "incremental":
-        first_gan = True
-    else:
-        first_gan = False
+
     print(concept_drift_type)
     data_names = ["cct", "baf_base", "variant4", "variant5"]
     no_preprocess_mean = []
@@ -394,6 +391,10 @@ for concept_drift_type in ["incremental", "oblivious", "sliding_window"]:
     esmote_stdev = []
     for data_name in data_names:
         print(data_name)
+        if concept_drift_type == "incremental":
+            first_gan = True
+        else:
+            first_gan = False
         match data_name:
           case "variant1":
             df = pd.read_csv(f'{path}/Variant I.csv', encoding='utf-8', sep=',')
