@@ -749,7 +749,7 @@ for concept_drift_type in ["incremental", "oblivious", "sliding_window"]:
 
             for i in range(len(y_test)):
               for j in range(rf_count):
-                true_probs[j][i] *= sums[i]
+                true_probs[j][i] /= sums[i]
             results = []
             count_fraud=0
             count_notfraud=0
