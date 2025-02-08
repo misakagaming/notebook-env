@@ -477,11 +477,7 @@ for content_drift_type in ["oblivious", "sliding_window"]:
             if content_drift_type == "sliding_window":
                 for i in range(6,12):
                     test_cds.append(df[df["Month"]==months[i]])
-                    train_cds.append(df.loc[df["Month"].isin(months[i-6:i])])              
-          """X_train = scaler.fit_transform(train_cd.drop(columns='Is Fraud?'))
-          y_train = train_cd['Is Fraud?'].values
-          X_test = scaler.fit_transform(test_cd.drop(columns='Is Fraud?'))
-          y_test = test_cd['Is Fraud?'].values"""
+                    train_cds.append(df.loc[df["Month"].isin(months[i-6:i])])
           
         elif data_name == "cct":
           X = scaler.fit_transform(df.drop(columns='Is Fraud?'))
