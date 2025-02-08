@@ -740,6 +740,7 @@ for concept_drift_type in ["incremental", "oblivious", "sliding_window"]:
                 test.append([k for k in probs[j]])
             true_probs = np.array(test)
             norm_weights = [float(i)/sum(weights) for i in weights]
+            sums = []
             for i in range(len(y_test)):
               sum = 0
               for j in range(rf_count):
