@@ -459,8 +459,8 @@ for content_drift_type in ["oblivious", "sliding_window"]:
                     train_cds.append(df.loc[df["month"].isin(months[0:4])])
             if content_drift_type == "sliding_window":
                 for i in range(4,8):
-                    test_cds.append(df[df["Month"]==months[i]])
-                    train_cds.append(df.loc[df["Month"].isin(months[i-4:i])])
+                    test_cds.append(df[df["month"]==months[i]])
+                    train_cds.append(df.loc[df["month"].isin(months[i-4:i])])
         elif data_name in baf:
           X = scaler.fit_transform(df.drop(columns='fraud_bool'))
           y = df['fraud_bool'].values
