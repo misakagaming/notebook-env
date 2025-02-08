@@ -372,6 +372,7 @@ conceptDrift = True
 
 #for data_name in ["variant1", "variant2", "variant3", "variant4", "variant5", "baf_base", "eucch", "paysim", "cct"]:
 for content_drift_type in ["oblivious", "sliding_window"]:
+    print(content_drift_type)
     data_names = ["cct", "baf_base", "variant4", "variant5"]
     no_preprocess_mean = []
     no_preprocess_stdev = []
@@ -382,6 +383,7 @@ for content_drift_type in ["oblivious", "sliding_window"]:
     esmote_mean = []
     esmote_stdev = []
     for data_name in data_names:
+        print(data_name)
         match data_name:
           case "variant1":
             df = pd.read_csv(f'{path}/Variant I.csv', encoding='utf-8', sep=',')
@@ -433,6 +435,7 @@ for content_drift_type in ["oblivious", "sliding_window"]:
 
         if data_name in baf:
           df.fraud_bool.value_counts()
+          
         if data_name == "eucch":
           df.Class.value_counts()
         if data_name == "paysim":
@@ -555,12 +558,16 @@ for content_drift_type in ["oblivious", "sliding_window"]:
             column_series = y_train
             if data_name in baf:
               train_combined['fraud_bool'] = column_series
+              diff = train_combined['fraud_bool'].value_counts()[0]-train_combined['fraud_bool'].value_counts()[1]
             elif data_name == "eucch":
               train_combined['Class'] = column_series
+              diff = train_combined['Class'].value_counts()[0]-train_combined['Class'].value_counts()[1]
             elif data_name == "paysim":
               train_combined['isFraud'] = column_series
+              diff = train_combined['isFraud'].value_counts()[0]-train_combined['isFraud'].value_counts()[1]
             elif data_name == "cct":
               train_combined['Is Fraud?'] = column_series
+              diff = train_combined['Is Fraud?'].value_counts()[0]-train_combined['Is Fraud?'].value_counts()[1]
             train_combined = train_combined.set_axis(column_names, axis=1)
 
             if data_name in baf:
@@ -579,11 +586,13 @@ for content_drift_type in ["oblivious", "sliding_window"]:
             dfs = np.array_split(notfraud,60)
             for count, df_sub in enumerate(dfs):
                 dfs[count] = pd.concat([df_sub, fraud])
-
+            
+            
+            
             generator = keras.models.load_model(f'generator.keras')
             discriminator = keras.models.load_model(f'discriminator.keras')
-            noise = np.random.normal(0, 1, (880148, 32))
-            sampled_labels = np.ones(880148).reshape(-1, 1)
+            noise = np.random.normal(0, 1, (diff, 32))
+            sampled_labels = np.ones(diff).reshape(-1, 1)
             gen_samples = generator.predict([noise, sampled_labels])
             gen_probs = discriminator.predict([gen_samples, sampled_labels])
             avg_prob = gen_probs.mean()
