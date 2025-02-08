@@ -46,6 +46,7 @@ from keras.initializers import RandomNormal
 import keras.backend as K
 from sklearn.utils import shuffle
 from imblearn.over_sampling import SMOTE
+import numpy as np
 
 # Download latest version
 path = kagglehub.dataset_download("sgpjesus/bank-account-fraud-dataset-neurips-2022")

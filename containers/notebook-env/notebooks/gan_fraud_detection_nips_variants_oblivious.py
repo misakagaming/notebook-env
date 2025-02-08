@@ -48,6 +48,7 @@ from keras.initializers import RandomNormal
 import keras.backend as K
 from sklearn.utils import shuffle
 from imblearn.over_sampling import SMOTE
+import numpy as np
 
 # Download latest version
 path = kagglehub.dataset_download("sgpjesus/bank-account-fraud-dataset-neurips-2022")
@@ -740,16 +741,17 @@ for concept_drift_type in ["incremental", "oblivious", "sliding_window"]:
                 test.append([k for k in probs[j]])
             true_probs = np.array(test)
             norm_weights = [float(i)/sum(weights) for i in weights]
-            sums = []
+            totals = []
+
             for i in range(len(y_test)):
-              sum = 0
+              total = 0
               for j in range(rf_count):
-                sum += true_probs[j][i]
-              sums.append(sum)
+                total += true_probs[j][i]
+              totals.append(total)
 
             for i in range(len(y_test)):
               for j in range(rf_count):
-                true_probs[j][i] /= sums[i]
+                true_probs[j][i] /= totals[i]
             results = []
             count_fraud=0
             count_notfraud=0
