@@ -638,7 +638,7 @@ for data_name in ["cct"]:
 
         # Make predictions on the testing set using the threshold
         y_pred_threshold = (y_prob >= threshold).astype(int)
-        _, recall, _, _ = precision_recall_fscore_support(y_test, y_pred)
+        _, recall, _, _ = precision_recall_fscore_support(y_test, y_pred_threshold)
 
 
 
@@ -777,7 +777,7 @@ for data_name in ["cct"]:
 
         # Make predictions on the testing set using the threshold
         y_pred_threshold = (y_prob >= threshold).astype(int)
-        _, recall, _, _ = precision_recall_fscore_support(y_test, y_pred)
+        _, recall, _, _ = precision_recall_fscore_support(y_test, y_pred_threshold)
 
 
 
@@ -914,7 +914,7 @@ for data_name in ["cct"]:
 
         # Make predictions on the testing set using the threshold
         y_pred_threshold = (y_prob >= threshold).astype(int)
-        _, recall, _, _ = precision_recall_fscore_support(y_test, y_pred)
+        _, recall, _, _ = precision_recall_fscore_support(y_test, y_pred_threshold)
 
 
 
@@ -1051,7 +1051,7 @@ for data_name in ["cct"]:
 
         # Make predictions on the testing set using the threshold
         y_pred_threshold = (y_prob >= threshold).astype(int)
-        _, recall, _, _ = precision_recall_fscore_support(y_test, y_pred)
+        _, recall, _, _ = precision_recall_fscore_support(y_test, y_pred_threshold)
 
 
 
@@ -1188,7 +1188,7 @@ for data_name in ["cct"]:
 
         # Make predictions on the testing set using the threshold
         y_pred_threshold = (y_prob >= threshold).astype(int)
-        _, recall, _, _ = precision_recall_fscore_support(y_test, y_pred)
+        _, recall, _, _ = precision_recall_fscore_support(y_test, y_pred_threshold)
 
 
 
@@ -1325,7 +1325,7 @@ for data_name in ["cct"]:
 
         # Make predictions on the testing set using the threshold
         y_pred_threshold = (y_prob >= threshold).astype(int)
-        _, recall, _, _ = precision_recall_fscore_support(y_test, y_pred)
+        _, recall, _, _ = precision_recall_fscore_support(y_test, y_pred_threshold)
 
 
 

@@ -729,7 +729,7 @@ for concept_drift_type in ["incremental", "oblivious", "sliding_window"]:
 
                 # Make predictions on the testing set using the threshold
                 y_pred_threshold = (y_prob >= threshold).astype(int)
-                _, recall, _, _ = precision_recall_fscore_support(y_test, y_pred)
+                _, recall, _, _ = precision_recall_fscore_support(y_test, y_pred_threshold)
 
 
 
