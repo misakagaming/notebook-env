@@ -445,7 +445,7 @@ for content_drift_type in ["oblivious", "sliding_window"]:
         scaler = StandardScaler()
         if data_name in baf:
             months = [0,1,2,3,4,5,6,7]
-        elif data_name == cct:
+        elif data_name == "cct":
             months = [1,2,3,4,5,6,7,8,9,10,11,12]
         if data_name in baf and conceptDrift:
             test_cds = []
