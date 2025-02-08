@@ -386,7 +386,7 @@ for data_name in ["cct"]:
       case "paysim":
         df = pd.read_csv(f'{path2}/PS_20174392719_1491204439457_log.csv', encoding='utf-8', sep=',')
       case "cct":
-        df = pd.read_csv(f'{path3}/credit_card_transactions-ibm_v2.csv', encoding='utf-8', sep=',', nrows=24386900)
+        df = pd.read_csv(f'{path3}/credit_card_transactions-ibm_v2.csv', encoding='utf-8', sep=',', nrows=2438690)
       case default:
         print("Invalid data name")
 
