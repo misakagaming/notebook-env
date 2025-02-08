@@ -702,14 +702,11 @@ for concept_drift_type in ["incremental", "oblivious", "sliding_window"]:
                   X_train_4 = scaler.fit_transform(df_sub.drop(columns='Is Fraud?'))
                   y_train_4 = df_sub['Is Fraud?'].values
                 X_train_4,y_train_4=smote.fit_resample(X_train_4,y_train_4)
-                if concept_drift_type == "incremental":
-                    rf_1 = xgb_inc_esmote[count]
-                else:
-                    rf_1 = XGBClassifier(random_state=42, scale_pos_weight=0.5, objective=objective)
+                rf_1 = XGBClassifier(random_state=42, scale_pos_weight=0.5, objective=objective)
                 rf_1.fit(X_train_4, y_train_4)
                 rfs.append(rf_1)
-                if concept_drift_type == "incremental":
-                    xgb_inc_esmote[count] = rf_1
+            if concept_drift_type == "incremental":
+                xgb_inc_esmote = rfs
 
             preds=[]
             probs = []
@@ -743,7 +740,15 @@ for concept_drift_type in ["incremental", "oblivious", "sliding_window"]:
                 test.append([k for k in probs[j]])
             true_probs = np.array(test)
             norm_weights = [float(i)/sum(weights) for i in weights]
+            for i in range(len(y_test)):
+              sum = 0
+              for j in range(rf_count):
+                sum += true_probs[j][i]
+              sums.append(sum)
 
+            for i in range(len(y_test)):
+              for j in range(rf_count):
+                true_probs[j][i] *= sums[i]
             results = []
             count_fraud=0
             count_notfraud=0

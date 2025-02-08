@@ -508,12 +508,16 @@ for data_name in ["cct"]:
     column_series = y_train
     if data_name in baf:
       train_combined['fraud_bool'] = column_series
+      diff = train_combined['fraud_bool'].value_counts()[0]-train_combined['fraud_bool'].value_counts()[1]
     elif data_name == "eucch":
       train_combined['Class'] = column_series
+      diff = train_combined['Class'].value_counts()[0]-train_combined['Class'].value_counts()[1]
     elif data_name == "paysim":
       train_combined['isFraud'] = column_series
+      diff = train_combined['isFraud'].value_counts()[0]-train_combined['isFraud'].value_counts()[1]
     elif data_name == "cct":
       train_combined['Is Fraud?'] = column_series
+      diff = train_combined['Is Fraud?'].value_counts()[0]-train_combined['Is Fraud?'].value_counts()[1]
     train_combined = train_combined.set_axis(column_names, axis=1)
 
     if data_name in baf:
@@ -535,8 +539,8 @@ for data_name in ["cct"]:
 
     generator = keras.models.load_model(f'generator.keras')
     discriminator = keras.models.load_model(f'discriminator.keras')
-    noise = np.random.normal(0, 1, (880148, 32))
-    sampled_labels = np.ones(880148).reshape(-1, 1)
+    noise = np.random.normal(0, 1, (diff, 32))
+    sampled_labels = np.ones(diff).reshape(-1, 1)
     gen_samples = generator.predict([noise, sampled_labels])
     gen_probs = discriminator.predict([gen_samples, sampled_labels])
     avg_prob = gen_probs.mean()
@@ -645,6 +649,17 @@ for data_name in ["cct"]:
         test.append([k for k in probs[j]])
     true_probs = np.array(test)
     norm_weights = [float(i)/sum(weights) for i in weights]
+    sums = []
+
+    for i in range(len(y_test)):
+      sum = 0
+      for j in range(rf_count):
+        sum += true_probs[j][i]
+      sums.append(sum)
+
+    for i in range(len(y_test)):
+      for j in range(rf_count):
+        true_probs[j][i] *= sums[i]
 
     results = []
     count_fraud=0
@@ -773,7 +788,15 @@ for data_name in ["cct"]:
         test.append([k for k in probs[j]])
     true_probs = np.array(test)
     norm_weights = [float(i)/sum(weights) for i in weights]
+    for i in range(len(y_test)):
+      sum = 0
+      for j in range(rf_count):
+        sum += true_probs[j][i]
+      sums.append(sum)
 
+    for i in range(len(y_test)):
+      for j in range(rf_count):
+        true_probs[j][i] *= sums[i]
     results = []
     count_fraud=0
     count_notfraud=0
@@ -900,7 +923,15 @@ for data_name in ["cct"]:
         test.append([k for k in probs[j]])
     true_probs = np.array(test)
     norm_weights = [float(i)/sum(weights) for i in weights]
+    for i in range(len(y_test)):
+      sum = 0
+      for j in range(rf_count):
+        sum += true_probs[j][i]
+      sums.append(sum)
 
+    for i in range(len(y_test)):
+      for j in range(rf_count):
+        true_probs[j][i] *= sums[i]
     results = []
     count_fraud=0
     count_notfraud=0
@@ -1027,7 +1058,15 @@ for data_name in ["cct"]:
         test.append([k for k in probs[j]])
     true_probs = np.array(test)
     norm_weights = [float(i)/sum(weights) for i in weights]
+    for i in range(len(y_test)):
+      sum = 0
+      for j in range(rf_count):
+        sum += true_probs[j][i]
+      sums.append(sum)
 
+    for i in range(len(y_test)):
+      for j in range(rf_count):
+        true_probs[j][i] *= sums[i]
     results = []
     count_fraud=0
     count_notfraud=0
@@ -1154,7 +1193,15 @@ for data_name in ["cct"]:
         test.append([k for k in probs[j]])
     true_probs = np.array(test)
     norm_weights = [float(i)/sum(weights) for i in weights]
+    for i in range(len(y_test)):
+      sum = 0
+      for j in range(rf_count):
+        sum += true_probs[j][i]
+      sums.append(sum)
 
+    for i in range(len(y_test)):
+      for j in range(rf_count):
+        true_probs[j][i] *= sums[i]
     results = []
     count_fraud=0
     count_notfraud=0
@@ -1281,7 +1328,15 @@ for data_name in ["cct"]:
         test.append([k for k in probs[j]])
     true_probs = np.array(test)
     norm_weights = [float(i)/sum(weights) for i in weights]
+    for i in range(len(y_test)):
+      sum = 0
+      for j in range(rf_count):
+        sum += true_probs[j][i]
+      sums.append(sum)
 
+    for i in range(len(y_test)):
+      for j in range(rf_count):
+        true_probs[j][i] *= sums[i]
     results = []
     count_fraud=0
     count_notfraud=0
