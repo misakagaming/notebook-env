@@ -368,12 +368,12 @@ baf = ["variant1", "variant2", "variant3", "variant4", "variant5", "baf_base"]
 
 conceptDrift = True
 
-xgb_inc_np = XGBClassifier(random_state=42, scale_pos_weight=0.5, objective=objective)
-xgb_inc_smote = XGBClassifier(random_state=42, scale_pos_weight=0.5, objective=objective)
-xgb_inc_gan = XGBClassifier(random_state=42, scale_pos_weight=0.5, objective=objective)
+xgb_inc_np = LGBMClassifier(random_state=42, scale_pos_weight=0.5)
+xgb_inc_smote = LGBMClassifier(random_state=42, scale_pos_weight=0.5)
+xgb_inc_gan = LGBMClassifier(random_state=42, scale_pos_weight=0.5)
 xgb_inc_esmote = []
 for i in range(60):
-    xgb_inc_esmote.append(XGBClassifier(random_state=42, scale_pos_weight=0.5, objective=objective))
+    xgb_inc_esmote.append(LGBMClassifier(random_state=42, scale_pos_weight=0.5))
 
 #concept_drift_types = ["oblivious", "sliding_window"]
 first_gan = False
@@ -538,7 +538,7 @@ for concept_drift_type in ["incremental", "oblivious", "sliding_window"]:
             if concept_drift_type == "incremental":
                 xgb_1 = xgb_inc_np
             else:
-                xgb_1 = XGBClassifier(random_state=42, scale_pos_weight=0.5, objective=objective)
+                xgb_1 = LGBMClassifier(random_state=42, scale_pos_weight=0.5)
             xgb_1.fit(X_train, y_train)
 
             y_pred = xgb_1.predict(X_test)
@@ -560,7 +560,7 @@ for concept_drift_type in ["incremental", "oblivious", "sliding_window"]:
             if concept_drift_type == "incremental":
                 xgb_1 = xgb_inc_smote
             else:
-                xgb_1 = XGBClassifier(random_state=42, scale_pos_weight=0.5, objective=objective)
+                xgb_1 = LGBMClassifier(random_state=42, scale_pos_weight=0.5)
             xgb_1.fit(X_train_2, y_train_2)
 
             y_pred = xgb_1.predict(X_test)
@@ -670,7 +670,7 @@ for concept_drift_type in ["incremental", "oblivious", "sliding_window"]:
             if concept_drift_type == "incremental":
                 xgb_1 = xgb_inc_gan
             else:
-                xgb_1 = XGBClassifier(random_state=42, scale_pos_weight=0.5, objective=objective)
+                xgb_1 = LGBMClassifier(random_state=42, scale_pos_weight=0.5)
             xgb_1.fit(X_train_3, y_train_3)
 
             y_pred = xgb_1.predict(X_test)
@@ -703,7 +703,7 @@ for concept_drift_type in ["incremental", "oblivious", "sliding_window"]:
                   X_train_4 = scaler.fit_transform(df_sub.drop(columns='Is Fraud?'))
                   y_train_4 = df_sub['Is Fraud?'].values
                 X_train_4,y_train_4=smote.fit_resample(X_train_4,y_train_4)
-                rf_1 = XGBClassifier(random_state=42, scale_pos_weight=0.5, objective=objective)
+                rf_1 = LGBMClassifier(random_state=42, scale_pos_weight=0.5)
                 rf_1.fit(X_train_4, y_train_4)
                 rfs.append(rf_1)
             if concept_drift_type == "incremental":
