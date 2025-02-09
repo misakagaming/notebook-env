@@ -381,7 +381,7 @@ first_gan = False
 for concept_drift_type in ["incremental", "oblivious", "sliding_window"]:
 
     print(concept_drift_type)
-    data_names = ["cct", "baf_base", "variant4", "variant5"]
+    data_names = ["paysim", "cct", "baf_base", "variant4", "variant5"]
     no_preprocess_mean = []
     no_preprocess_stdev = []
     smote_mean = []
@@ -425,7 +425,7 @@ for concept_drift_type in ["incremental", "oblivious", "sliding_window"]:
         elif data_name == "eucch":
           df = df.drop(columns='Time')
         elif data_name == "paysim":
-          df = df.drop(["step", "type", "nameOrig", "nameDest", "isFlaggedFraud"], axis = 1)
+          df = df.drop(["type", "nameOrig", "nameDest", "isFlaggedFraud"], axis = 1)
         elif data_name == "cct":
           df = df.drop(["User", "Card", "Errors?"], axis = 1)
           df = df.dropna()
@@ -458,6 +458,8 @@ for concept_drift_type in ["incremental", "oblivious", "sliding_window"]:
     
     
         scaler = StandardScaler()
+        if data_name == "paysim":
+            steps = range(1,744)
         if data_name in baf:
             months = [0,1,2,3,4,5,6,7]
         elif data_name == "cct":
@@ -485,6 +487,23 @@ for concept_drift_type in ["incremental", "oblivious", "sliding_window"]:
         elif data_name == "eucch":
           X = scaler.fit_transform(df.drop(columns='Class'))
           y = df['Class'].values
+        elif data_name == "paysim" and conceptDrift:
+            test_cds = []
+            train_cds = []
+            if concept_drift_type == "oblivious":
+                for i in range(2,4):
+                    test_cds.append(df.loc[df["step"].isin(steps[i*186:(i+1)*186])])
+                    train_cds.append(df.loc[df["step"].isin(steps[0:372])])
+            if concept_drift_type == "sliding_window":
+                for i in range(2,4):
+                    test_cds.append(df.loc[df["step"].isin(steps[i*186:(i+1)*186])])
+                    train_cds.append(df.loc[df["step"].isin(steps[(i-2)*186:i*186])])
+            if concept_drift_type == "incremental":
+                test_cds.append(df.loc[df["step"].isin(steps[2*186:(2+1)*186])])
+                train_cds.append(df.loc[df["step"].isin(steps[0:372])])
+                for i in range(3,4):
+                    test_cds.append(df.loc[df["step"].isin(steps[i*186:(i+1)*186])])
+                    train_cds.append(df.loc[df["step"].isin(steps[(i-1)*186:i*186])])           
         elif data_name == "paysim":
           X = scaler.fit_transform(df.drop(columns='isFraud'))
           y = df['isFraud'].values
@@ -528,7 +547,12 @@ for concept_drift_type in ["incremental", "oblivious", "sliding_window"]:
                 X_train = scaler.fit_transform(train_cd.drop(columns='fraud_bool'))
                 y_train = train_cd['fraud_bool'].values
                 X_test = scaler.fit_transform(test_cd.drop(columns='fraud_bool'))
-                y_test = test_cd['fraud_bool'].values                
+                y_test = test_cd['fraud_bool'].values  
+            elif data_name == "paysim":
+                X_train = scaler.fit_transform(train_cd.drop(columns='isFraud'))
+                y_train = train_cd['isFraud'].values
+                X_test = scaler.fit_transform(test_cd.drop(columns='isFraud'))
+                y_test = test_cd['isFraud'].values                  
             
 
             """XGBoost
