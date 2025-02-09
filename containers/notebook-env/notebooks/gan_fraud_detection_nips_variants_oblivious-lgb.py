@@ -790,4 +790,4 @@ for concept_drift_type in ["incremental", "oblivious", "sliding_window"]:
             'GAN': gan,
             'ESMOTE': esmote}
     df = pd.DataFrame(data)
-    df.to_csv(f'{concept_drift_type}-xgboost.csv', index=False)  
+    df.to_csv(f'{concept_drift_type}-lgboost.csv', index=False)  
