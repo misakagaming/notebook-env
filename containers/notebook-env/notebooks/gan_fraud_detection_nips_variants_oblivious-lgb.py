@@ -381,7 +381,8 @@ first_gan = False
 for concept_drift_type in ["incremental", "oblivious", "sliding_window"]:
 
     print(concept_drift_type)
-    data_names = ["paysim", "cct", "baf_base", "variant4", "variant5"]
+    #data_names = ["paysim", "cct", "baf_base", "variant4", "variant5"]
+    data_names = ["paysim"]
     no_preprocess_mean = []
     no_preprocess_stdev = []
     smote_mean = []
@@ -425,7 +426,7 @@ for concept_drift_type in ["incremental", "oblivious", "sliding_window"]:
         elif data_name == "eucch":
           df = df.drop(columns='Time')
         elif data_name == "paysim":
-          df = df.drop(["step", "type", "nameOrig", "nameDest", "isFlaggedFraud"], axis = 1)
+          df = df.drop(["type", "nameOrig", "nameDest", "isFlaggedFraud"], axis = 1)
         elif data_name == "cct":
           df = df.drop(["User", "Card", "Errors?"], axis = 1)
           df = df.dropna()
